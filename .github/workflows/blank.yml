@@ -31,7 +31,7 @@ jobs:
       # Step 4: Run the pipeline script (your main execution code)
       - name: Run Pipeline
         run: |
-          python scripts/main.py  # Assuming your pipeline is in a script called 'main.py'
+          python src/main.py  # Assuming your pipeline is in a script called 'main.py'
 
   # Optional: Save the trained model as part of the pipeline (local save)
   save_model:
