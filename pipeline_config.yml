@@ -1,0 +1,32 @@
+pipeline:
+  - name: "Fetch Data"
+    step: "fetch_data"
+    description: "Download and load Fashion MNIST dataset."
+    
+  - name: "Preprocess Data"
+    step: "preprocess_data"
+    description: "Preprocess and scale the data."
+  
+  - name: "Build Model"
+    step: "build_model"
+    description: "Define and compile the model architecture."
+  
+  - name: "Train Model"
+    step: "train_model"
+    description: "Train the model with training data."
+    
+  - name: "Evaluate Model"
+    step: "evaluate_model"
+    description: "Evaluate the model using test data."
+    
+  - name: "Save Model"
+    step: "save_model"
+    description: "Save the trained model."
+  
+  - name: "Visualization"
+    step: "visualization"
+    description: "Generate visualizations like accuracy plots."
+  
+  - name: "Explainability"
+    step: "explainability"
+    description: "Use SHAP or LIME to explain the model predictions."
