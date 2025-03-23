@@ -1,0 +1,59 @@
+name: Fashion MNIST Pipeline
+
+on:
+  push:
+    branches:
+      - main   # Trigger the pipeline when there is a push to the 'main' branch
+  pull_request:
+    branches:
+      - main   # Trigger the pipeline when there is a PR to the 'main' branch
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest  # Specify the OS environment to run the job
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python 3.x
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # You can change to any version you need
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Install all dependencies from the requirements.txt
+
+      # Step 4: Run the pipeline script (your main execution code)
+      - name: Run Pipeline
+        run: |
+          python scripts/main.py  # Assuming your pipeline is in a script called 'main.py'
+
+  # Optional: Save the trained model as part of the pipeline (local save)
+  save_model:
+    needs: setup  # This job depends on the 'setup' job
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code again for consistency
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Save the trained model locally or to your desired location
+      - name: Save Model Locally
+        run: |
+          mkdir -p ./models
+          mv best_model.zip ./models/best_model.zip  # Assuming best_model.zip is saved after training
+
+  # Notify after the successful pipeline run (email, Slack, etc.)
+  notify:
+    needs: save_model  # This job depends on the 'save_model' job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Notification
+        run: |
+          echo "Pipeline executed and model saved successfully!"  # You can replace with actual notification code
